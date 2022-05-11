@@ -66,7 +66,6 @@ function UserProfile() {
           description: description
         });
         toast.success("Posted Article Successfully.")
-        console.log("Article Posted.");
         router.push('/article/list');
       } catch(error){
         console.log("Errors: ",error);
