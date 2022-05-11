@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from 'next/router';
 import axios from "axios";
+import toast from "react-hot-toast";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -46,22 +47,30 @@ function UserProfile() {
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
 
+  const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   const handleClickPost = async () => {
-    if(title != "" && email != "" && description != "") {
+    if(title == ""){
+      toast.error("Please input Title!");
+    }else if(description == ""){
+      toast.error("Please input Description!");
+    }else if(email == ""){
+      toast.error("Please input Email!");
+    }else if(!email.match(validRegex)){
+      toast.error("Please input Correct Email!");
+      setEmail("");
+    }else{
       try {
         await axios.post("http://localhost:3000/api/article", {
           title: title,
           email: email,
           description: description
         });
+        toast.success("Posted Article Successfully.")
         console.log("Article Posted.");
         router.push('/article/list');
       } catch(error){
         console.log("Errors: ",error);
       }
-    }
-    else{
-      console.log("Please fill all fields.")
     }
   }
   return (
@@ -90,7 +99,7 @@ function UserProfile() {
                 <GridItem xs={12} sm={12} md={12}>
                   <InputLabel style={{ color: "#AAAAAA" }}>Article Detail</InputLabel>
                   <CustomInput
-                    labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
+                    labelText="Input detail description here."
                     id="article-detail"
                     formControlProps={{
                       fullWidth: true,

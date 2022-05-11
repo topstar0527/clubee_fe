@@ -5,6 +5,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import { Toaster } from "react-hot-toast";
 // core components
 import Navbar from "components/Navbars/Navbar.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
@@ -78,6 +79,7 @@ export default function Article({ children, ...rest }) {
           <div className={classes.container}>{children}</div>
         </div>
       </div>
+      <Toaster/>
     </div>
   );
 }
